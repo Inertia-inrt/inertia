@@ -6,18 +6,16 @@
     <title>Inertia</title>
     <style>
        body {
-    margin: 0;
-    font-family: sans-serif;
-    background: #fff;
-    color: #333;
-
-    /* Добавляем фон */
-    background-image: url('background.jpeg');
-    background-size: cover;      /* Масштабировать фон так, чтобы он покрывал весь экран */
-    background-position: center; /* Центрирование фона */
-    background-repeat: no-repeat;/* Изображение не повторяется */
-    background-attachment: fixed;/* Фон остается неподвижным при скролле (опционально) */
-}
+            margin: 0;
+            font-family: sans-serif;
+            background: #fff;
+            color: #333;
+            background-image: url('background.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
 
         header {
             display: flex;
@@ -47,6 +45,15 @@
             text-align: center;
             padding: 0 20px;
         }
+
+        .content-box {
+            background: rgba(255, 255, 255, 0.7); /* Белый с 70% прозрачностью */
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
         main h1 {
             font-size: 2em;
             margin-bottom: 20px;
@@ -83,12 +90,14 @@
         </nav>
     </header>
     <main>
-        <h1> <img src="/logoi.png" alt="Inertia logo" style="height:200px;"></h1>
-        <p>
-            Momentum without meaning. In a world filled with constant noise, hype, and promises of revolutionary change, Inertia simply exists. 
-            We do not strive for innovation or claim to be the next big thing. We are a reflection of market psychology—moving forward out of habit, not purpose.
-        </p>
-        <a href="#" class="btn">Participate in IDO</a>
+        <div class="content-box">
+            <h1><img src="logoi.png" alt="Inertia logo" style="height:200px;"></h1>
+            <p>
+                Momentum without meaning. In a world filled with constant noise, hype, and promises of revolutionary change, Inertia simply exists. 
+                We do not strive for innovation or claim to be the next big thing. We are a reflection of market psychology—moving forward out of habit, not purpose.
+            </p>
+            <a href="#" class="btn">Participate in IDO</a>
+        </div>
     </main>
     <footer>
         © 2024 Inertia. All rights reserved.
