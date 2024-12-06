@@ -5,12 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>    
     <title>Inertia</title>
     <style>
-        body {
-            margin: 0;
-            font-family: sans-serif;
-            background: #fff;
-            color: #333;
-        }
+       body {
+    margin: 0;
+    font-family: sans-serif;
+    background: #fff;
+    color: #333;
+
+    /* Добавляем фон */
+    background-image: url('background.jpeg');
+    background-size: cover;      /* Масштабировать фон так, чтобы он покрывал весь экран */
+    background-position: center; /* Центрирование фона */
+    background-repeat: no-repeat;/* Изображение не повторяется */
+    background-attachment: fixed;/* Фон остается неподвижным при скролле (опционально) */
+}
+
         header {
             display: flex;
             justify-content: space-between;
