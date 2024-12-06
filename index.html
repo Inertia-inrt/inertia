@@ -6,51 +6,62 @@
     <title>Inertia</title>
     <style>
         body {
-            margin: 0; 
-            font-family: sans-serif; 
-            background: #fff; 
+            margin: 0;
+            font-family: sans-serif;
+            background: #fff;
             color: #333;
         }
         header {
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 20px;
         }
         header .logo {
             font-weight: bold;
             font-size: 1.2em;
         }
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin-right: 10px;
+            font-size: 0.95em;
+        }
+        nav a:last-child {
+            margin-right: 0;
+        }
         main {
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 80vh; 
-            text-align: center; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            text-align: center;
             padding: 0 20px;
         }
         main h1 {
-            font-size: 2em; 
+            font-size: 2em;
             margin-bottom: 20px;
         }
         main p {
-            max-width: 600px; 
-            margin-bottom: 20px; 
+            max-width: 600px;
+            margin-bottom: 20px;
             line-height: 1.5;
+            font-size: 1em;
         }
         .btn {
-            display: inline-block; 
-            padding: 10px 20px; 
+            display: inline-block;
+            padding: 10px 20px;
             background: #a5754c; 
-            color: #fff; 
-            text-decoration: none; 
+            color: #fff;
+            text-decoration: none;
             border-radius: 4px;
+            font-size: 0.95em;
         }
         footer {
-            text-align: center; 
-            font-size: 0.9em; 
-            color: #666; 
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
             padding: 20px;
         }
     </style>
@@ -59,14 +70,16 @@
     <header>
         <div class="logo">Inertia</div>
         <nav>
-            <!-- Ссылки на Twitter, Telegram -->
-            <a href="#" style="margin-right:10px; text-decoration:none; color:#333;">Twitter</a>
-            <a href="#" style="text-decoration:none; color:#333;">Telegram</a>
+            <a href="#">Twitter</a>
+            <a href="#">Telegram</a>
         </nav>
     </header>
     <main>
-        <h1> <img src="/logoi.png" alt="Inertia logo" style="height:190px;"></h1>
-        <p>Momentum without meaning. В мире непрерывного шума и обещаний мы — просто факт существования, отражающий бессмысленное движение рынка.</p>
+        <h1> <img src="/logoi.png" alt="Inertia logo" style="height:300px;">/h1>
+        <p>
+            Momentum without meaning. In a world filled with constant noise, hype, and promises of revolutionary change, Inertia simply exists. 
+            We do not strive for innovation or claim to be the next big thing. We are a reflection of market psychology—moving forward out of habit, not purpose.
+        </p>
         <a href="#" class="btn">Participate in IDO</a>
     </main>
     <footer>
