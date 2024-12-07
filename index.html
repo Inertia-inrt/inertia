@@ -119,9 +119,21 @@
 
     <audio id="bg-music" src="background.mp3" loop></audio>
     <script>
+        let isPlaying = false; // Флаг для отслеживания состояния музыки
+
         function playMusic() {
             const audio = document.getElementById('bg-music');
-            audio.play();
+            if (audio) {
+                if (isPlaying) {
+                    audio.pause(); // Остановить музыку
+                    isPlaying = false;
+                } else {
+                    audio.play().catch(error => {
+                        console.error("Ошибка воспроизведения аудио:", error);
+                    });
+                    isPlaying = true;
+                }
+            }
         }
     </script>
 </body>
