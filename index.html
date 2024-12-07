@@ -26,10 +26,9 @@
         header .logo {
             font-weight: bold;
             font-size: 1.2em;
-            transition: transform 0.3s ease; /* Плавная анимация при наведении */
+            transition: transform 0.3s ease;
             cursor: pointer; 
         }
-        /* При наведении увеличиваем масштаб только для лого сверху */
         header .logo:hover {
             transform: scale(1.1);
         }
@@ -60,8 +59,19 @@
         main h1 {
             font-size: 2em;
             margin-bottom: 20px;
-            cursor: pointer; /* Укажем, что на h1 можно кликать */
+            cursor: pointer;
         }
+
+        /* Чтобы увеличить изображение по ховеру */
+        main h1 img {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        main h1 img:hover {
+            transform: scale(1.05);
+        }
+
         main p {
             max-width: 600px;
             margin-bottom: 20px;
@@ -87,18 +97,16 @@
 </head>
 <body>
     <header>
-        <!-- Лого в хедере с эффектом увеличения при наведении, но без запуска музыки -->
-        <div class="logo">
-            Inertia
-        </div>
+        <div class="logo">Inertia</div>
         <nav>
             <a href="#">Twitter</a>
             <a href="#">Telegram</a>
         </nav>
     </header>
     <main>
-        <!-- При клике на h1 с изображением запускаем музыку -->
-        <h1 onclick="playMusic()"><img src="logoi.png" alt="Inertia logo" style="height:200px;"></h1>
+        <h1 onclick="playMusic()">
+            <img src="logoi.png" alt="Inertia logo" style="height:200px;">
+        </h1>
         <p>
             Momentum without meaning. In a world filled with constant noise, hype, and promises of revolutionary change, Inertia simply exists. 
             We do not strive for innovation or claim to be the next big thing. We are a reflection of market psychology—moving forward out of habit, not purpose.
@@ -109,7 +117,6 @@
         © 2024 Inertia. All rights reserved.
     </footer>
 
-    <!-- Аудио элемент -->
     <audio id="bg-music" src="background.mp3" loop></audio>
     <script>
         function playMusic() {
