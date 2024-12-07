@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>    
     <title>Inertia</title>
     <style>
-       body {
+        body {
             margin: 0;
             font-family: sans-serif;
             background: #fff;
@@ -60,16 +60,26 @@
             font-size: 2em;
             margin-bottom: 20px;
             cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
-        /* Чтобы увеличить изображение по ховеру */
         main h1 img {
             display: inline-block;
             transition: transform 0.3s ease;
         }
 
-        main h1 img:hover {
-            transform: scale(1.05);
+        /* Анимация вращения */
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spinning img {
+            animation: spin 5s linear infinite;
         }
 
         main p {
@@ -104,7 +114,7 @@
         </nav>
     </header>
     <main>
-        <h1 onclick="playMusic()">
+        <h1 id="logo" onclick="toggleMusic()">
             <img src="logoi.png" alt="Inertia logo" style="height:200px;">
         </h1>
         <p>
@@ -121,17 +131,20 @@
     <script>
         let isPlaying = false; // Флаг для отслеживания состояния музыки
 
-        function playMusic() {
+        function toggleMusic() {
             const audio = document.getElementById('bg-music');
+            const logo = document.getElementById('logo');
             if (audio) {
                 if (isPlaying) {
                     audio.pause(); // Остановить музыку
                     isPlaying = false;
+                    logo.classList.remove('spinning'); // Остановить вращение
                 } else {
                     audio.play().catch(error => {
                         console.error("Ошибка воспроизведения аудио:", error);
                     });
                     isPlaying = true;
+                    logo.classList.add('spinning'); // Запустить вращение
                 }
             }
         }
