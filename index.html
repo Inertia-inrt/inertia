@@ -23,12 +23,14 @@
             align-items: center;
             padding: 20px;
         }
+
         header .logo {
             font-weight: bold;
             font-size: 1.2em;
             transition: transform 0.3s ease;
             cursor: pointer; 
         }
+
         header .logo:hover {
             transform: scale(1.1);
         }
@@ -39,9 +41,11 @@
             margin-right: 10px;
             font-size: 0.95em;
         }
+
         nav a:last-child {
             margin-right: 0;
         }
+
         main {
             display: flex;
             flex-direction: column;
@@ -52,10 +56,6 @@
             padding: 0 20px;
         }
         
-        main h1, main p {
-            text-shadow: 0 0 5px rgba(0,0,0,0.5);
-        }
-
         main h1 {
             font-size: 2em;
             margin-bottom: 20px;
@@ -65,21 +65,6 @@
 
         main h1 img {
             display: inline-block;
-            transition: transform 0.3s ease;
-        }
-
-        /* Анимация вращения */
-        @keyframes spin {
-            from {
-                transform: rotate(var(--start-angle, 0deg));
-            }
-            to {
-                transform: rotate(calc(var(--start-angle, 0deg) + 360deg));
-            }
-        }
-
-        .spinning img {
-            animation: spin 5s linear infinite;
         }
 
         main p {
@@ -88,6 +73,7 @@
             line-height: 1.5;
             font-size: 1em;
         }
+
         .btn {
             display: inline-block;
             padding: 10px 20px;
@@ -97,6 +83,7 @@
             border-radius: 4px;
             font-size: 0.95em;
         }
+
         footer {
             text-align: center;
             font-size: 0.9em;
@@ -130,39 +117,36 @@
     <audio id="bg-music" src="background.mp3" loop></audio>
     <script>
         let isPlaying = false; // Флаг для отслеживания состояния музыки
-        let rotationAngle = 0; // Угол вращения
+        let rotationAngle = 0; // Текущий угол вращения
+        let animationFrame; // ID текущего анимационного кадра
+        const rotationSpeed = 0.05; // Скорость вращения (в градусах за кадр)
+
+        function rotateLogo(timestamp) {
+            const logo = document.querySelector('#logo img');
+            rotationAngle += rotationSpeed; // Увеличиваем угол
+            rotationAngle %= 360; // Ограничиваем угол до 360 градусов
+            logo.style.transform = `rotate(${rotationAngle}deg)`; // Устанавливаем новый угол
+            animationFrame = requestAnimationFrame(rotateLogo); // Запрашиваем следующий кадр
+        }
+
+        function stopRotation() {
+            cancelAnimationFrame(animationFrame); // Останавливаем анимацию
+        }
 
         function toggleMusic() {
             const audio = document.getElementById('bg-music');
-            const logo = document.getElementById('logo');
-            const img = logo.querySelector('img');
-
             if (audio) {
+                const logo = document.querySelector('#logo img');
                 if (isPlaying) {
-                    // Остановить музыку
-                    audio.pause();
+                    audio.pause(); // Остановить музыку
+                    stopRotation(); // Остановить вращение
                     isPlaying = false;
-
-                    // Вычислить текущий угол вращения
-                    const computedStyle = getComputedStyle(img);
-                    const matrix = new DOMMatrix(computedStyle.transform);
-                    const currentAngle = Math.round(Math.atan2(matrix.m21, matrix.m11) * (180 / Math.PI));
-                    rotationAngle = currentAngle < 0 ? 360 + currentAngle : currentAngle;
-
-                    // Установить угол как статический
-                    img.style.transform = `rotate(${rotationAngle}deg)`;
-                    img.style.animation = 'none';
                 } else {
-                    // Включить музыку
                     audio.play().catch(error => {
                         console.error("Ошибка воспроизведения аудио:", error);
                     });
                     isPlaying = true;
-
-                    // Установить начальный угол и включить анимацию
-                    img.style.setProperty('--start-angle', `${rotationAngle}deg`);
-                    img.style.animation = '';
-                    logo.classList.add('spinning');
+                    rotateLogo(); // Запустить вращение
                 }
             }
         }
