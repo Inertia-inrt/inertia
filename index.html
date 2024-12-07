@@ -26,7 +26,14 @@
         header .logo {
             font-weight: bold;
             font-size: 1.2em;
+            transition: transform 0.3s ease; /* Плавная анимация при наведении */
+            cursor: pointer; /* Чтобы было видно, что на логотип можно кликать */
         }
+        /* При наведении увеличиваем масштаб */
+        header .logo:hover {
+            transform: scale(1.1);
+        }
+
         nav a {
             text-decoration: none;
             color: #333;
@@ -46,9 +53,8 @@
             padding: 0 20px;
         }
         
-        /* Добавляем тень к тексту */
         main h1, main p {
-            text-shadow: 0 0 4px rgba(0,0,0,0.4);
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
         }
 
         main h1 {
@@ -79,10 +85,11 @@
     </style>
 </head>
 <body>
-	<button onclick="document.getElementById('bg-music').play()">Play Music</button>
-<audio id="bg-music" src="background.mp3" loop></audio>
     <header>
-        <div class="logo">Inertia</div>
+        <!-- Добавим onclick для запуска музыки -->
+        <div class="logo" onclick="playMusic()">
+            Inertia
+        </div>
         <nav>
             <a href="#">Twitter</a>
             <a href="#">Telegram</a>
@@ -94,10 +101,19 @@
             Momentum without meaning. In a world filled with constant noise, hype, and promises of revolutionary change, Inertia simply exists. 
             We do not strive for innovation or claim to be the next big thing. We are a reflection of market psychology—moving forward out of habit, not purpose.
         </p>
-        <a href="#" class="btn">Coming soon...</a>
+        <a href="#" class="btn">Participate in IDO</a>
     </main>
     <footer>
         © 2024 Inertia. All rights reserved.
     </footer>
+
+    <!-- Аудио элемент -->
+    <audio id="bg-music" src="background.mp3" loop></audio>
+    <script>
+        function playMusic() {
+            const audio = document.getElementById('bg-music');
+            audio.play();
+        }
+    </script>
 </body>
 </html>
