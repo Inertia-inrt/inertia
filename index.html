@@ -71,10 +71,10 @@
         /* Анимация вращения */
         @keyframes spin {
             from {
-                transform: rotate(0deg);
+                transform: rotate(var(--start-angle, 0deg));
             }
             to {
-                transform: rotate(360deg);
+                transform: rotate(calc(var(--start-angle, 0deg) + 360deg));
             }
         }
 
@@ -130,21 +130,39 @@
     <audio id="bg-music" src="background.mp3" loop></audio>
     <script>
         let isPlaying = false; // Флаг для отслеживания состояния музыки
+        let rotationAngle = 0; // Угол вращения
 
         function toggleMusic() {
             const audio = document.getElementById('bg-music');
             const logo = document.getElementById('logo');
+            const img = logo.querySelector('img');
+
             if (audio) {
                 if (isPlaying) {
-                    audio.pause(); // Остановить музыку
+                    // Остановить музыку
+                    audio.pause();
                     isPlaying = false;
-                    logo.classList.remove('spinning'); // Остановить вращение
+
+                    // Вычислить текущий угол вращения
+                    const computedStyle = getComputedStyle(img);
+                    const matrix = new DOMMatrix(computedStyle.transform);
+                    const currentAngle = Math.round(Math.atan2(matrix.m21, matrix.m11) * (180 / Math.PI));
+                    rotationAngle = currentAngle < 0 ? 360 + currentAngle : currentAngle;
+
+                    // Установить угол как статический
+                    img.style.transform = `rotate(${rotationAngle}deg)`;
+                    img.style.animation = 'none';
                 } else {
+                    // Включить музыку
                     audio.play().catch(error => {
                         console.error("Ошибка воспроизведения аудио:", error);
                     });
                     isPlaying = true;
-                    logo.classList.add('spinning'); // Запустить вращение
+
+                    // Установить начальный угол и включить анимацию
+                    img.style.setProperty('--start-angle', `${rotationAngle}deg`);
+                    img.style.animation = '';
+                    logo.classList.add('spinning');
                 }
             }
         }
