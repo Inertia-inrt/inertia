@@ -80,13 +80,13 @@
             transition: opacity 0.3s ease;
         }
 
-        #logo img {
-            border: 5px solid transparent;
-            transition: border-color 0.3s ease;
-            animation: pulse 2s infinite; /* Пульсация по умолчанию */
+        /* Обёртка для пульсации */
+        .logo-container {
+            display: inline-block;
+            animation: pulse 2s infinite;
         }
 
-        /* Эффект пульсации */
+        /* Пульсация контейнера */
         @keyframes pulse {
             0%, 100% {
                 transform: scale(1);
@@ -100,16 +100,21 @@
             opacity: 1;
         }
 
+        #logo img {
+            border: 5px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
         #logo:hover img {
             border-color: #ffd700;
         }
 
         main p {
-            max-width: 600px; /* Ограничение ширины текста */
+            max-width: 600px;
             margin-bottom: 20px;
             line-height: 1.6;
             font-size: 1em;
-            color: #444; /* Нейтральный цвет для текста */
+            color: #444;
         }
 
         .btn {
@@ -125,7 +130,7 @@
         }
 
         .btn:hover {
-            background: #8d6540; /* Более темный оттенок при наведении */
+            background: #8d6540;
         }
 
         footer {
@@ -146,7 +151,9 @@
     </header>
     <main>
         <h1 id="logo" onclick="toggleMusic()">
-            <img src="logoi.png" alt="Inertia logo" style="height:200px;">
+            <span class="logo-container">
+                <img src="logoi.png" alt="Inertia logo" style="height:200px;">
+            </span>
         </h1>
         <p>
             Momentum without meaning. In a world filled with constant noise, hype, and promises of revolutionary change, Inertia simply exists. 
@@ -160,38 +167,38 @@
 
     <audio id="bg-music" src="background.mp3" loop></audio>
     <script>
-        let isPlaying = false; // Флаг для отслеживания состояния музыки
-        let rotationAngle = 0; // Текущий угол вращения
-        let animationFrame; // ID текущего анимационного кадра
-        const rotationSpeed = 0.1; // Скорость вращения (в градусах за кадр)
+        let isPlaying = false;
+        let rotationAngle = 0;
+        let animationFrame;
+        const rotationSpeed = 0.1;
 
         function rotateLogo() {
             const logo = document.querySelector('#logo img');
-            rotationAngle += rotationSpeed; // Увеличиваем угол
-            rotationAngle %= 360; // Ограничиваем угол до 360 градусов
-            logo.style.transform = `rotate(${rotationAngle}deg)`; // Только вращение
-            animationFrame = requestAnimationFrame(rotateLogo); // Запрашиваем следующий кадр
+            rotationAngle += rotationSpeed;
+            rotationAngle %= 360;
+            logo.style.transform = `rotate(${rotationAngle}deg)`;
+            animationFrame = requestAnimationFrame(rotateLogo);
         }
 
         function stopRotation() {
-            cancelAnimationFrame(animationFrame); // Останавливаем анимацию
+            cancelAnimationFrame(animationFrame);
             const logo = document.querySelector('#logo img');
-            logo.style.transform = ''; // Сбрасываем вращение
+            logo.style.transform = ''; // Сброс вращения при остановке
         }
 
         function toggleMusic() {
             const audio = document.getElementById('bg-music');
             if (audio) {
                 if (isPlaying) {
-                    audio.pause(); // Остановить музыку
-                    stopRotation(); // Остановить вращение
+                    audio.pause();
+                    stopRotation();
                     isPlaying = false;
                 } else {
                     audio.play().catch(error => {
                         console.error("Error playing audio:", error);
                     });
                     isPlaying = true;
-                    rotateLogo(); // Запустить вращение
+                    rotateLogo();
                 }
             }
         }
