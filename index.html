@@ -81,9 +81,8 @@
             transition: opacity 0.3s ease;
         }
 
-        /* Пульсация и эффекты */
+        /* Эффекты при наведении */
         #logo img {
-            animation: pulse 2s infinite;
             border: 5px solid transparent;
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
@@ -93,42 +92,8 @@
         }
 
         #logo:hover img {
-            animation: none;
             transform: scale(1.1);
             border-color: #ffd700;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        main p {
-            max-width: 600px;
-            margin-bottom: 20px;
-            line-height: 1.5;
-            font-size: 1em;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #a5754c; 
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 0.95em;
-        }
-
-        footer {
-            text-align: center;
-            font-size: 0.9em;
-            color: #666;
-            padding: 20px;
         }
     </style>
 </head>
@@ -159,9 +124,9 @@
         let isPlaying = false; // Флаг для отслеживания состояния музыки
         let rotationAngle = 0; // Текущий угол вращения
         let animationFrame; // ID текущего анимационного кадра
-        const rotationSpeed = 0.05; // Скорость вращения (в градусах за кадр)
+        const rotationSpeed = 0.1; // Скорость вращения (в градусах за кадр)
 
-        function rotateLogo(timestamp) {
+        function rotateLogo() {
             const logo = document.querySelector('#logo img');
             rotationAngle += rotationSpeed; // Увеличиваем угол
             rotationAngle %= 360; // Ограничиваем угол до 360 градусов
