@@ -169,14 +169,14 @@
             const logo = document.querySelector('#logo img');
             rotationAngle += rotationSpeed; // Увеличиваем угол
             rotationAngle %= 360; // Ограничиваем угол до 360 градусов
-            logo.style.transform = `rotate(${rotationAngle}deg) scale(1.05)`; // Вращение + масштаб
+            logo.style.transform = `rotate(${rotationAngle}deg)`; // Устанавливаем новый угол
             animationFrame = requestAnimationFrame(rotateLogo); // Запрашиваем следующий кадр
         }
 
         function stopRotation() {
             cancelAnimationFrame(animationFrame); // Останавливаем анимацию
             const logo = document.querySelector('#logo img');
-            logo.style.transform = 'scale(1)'; // Сбрасываем масштаб к пульсации
+            logo.style.transform = ''; // Сбрасываем трансформации
         }
 
         function toggleMusic() {
