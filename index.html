@@ -85,6 +85,21 @@
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
+        /* Эффект пульсации */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Применяем пульсацию по умолчанию */
+        #logo img {
+            animation: pulse 2s infinite;
+        }
+
         #logo:hover::after {
             opacity: 1;
         }
@@ -92,6 +107,7 @@
         #logo:hover img {
             transform: scale(1.1);
             border-color: #ffd700;
+            animation: none; /* Останавливаем пульсацию при наведении */
         }
 
         main p {
