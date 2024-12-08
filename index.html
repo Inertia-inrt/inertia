@@ -68,7 +68,7 @@
         }
 
         #logo img.highlight {
-            filter: drop-shadow(0 0 5px rgba(200, 200, 200, 0.8)) drop-shadow(0 0 10px rgba(200, 200, 200, 0.8)); /* Усиленное свечение при наведении */
+            filter: drop-shadow(0 0 5px rgba(200, 200, 200, 0.8)) drop-shadow(0 0 10px rgba(200, 200, 200, 0.8)); /* Усиленное свечение */
         }
 
         main p {
@@ -128,9 +128,42 @@
     <audio id="bg-music" src="background.mp3" loop></audio>
     <canvas id="hidden-canvas" style="display:none;"></canvas>
     <script>
+        let isPlaying = false;
+        let rotationAngle = 0;
+        let animationFrame;
+        const rotationSpeed = 0.2;
+
         const logo = document.querySelector('#logo img');
         const canvas = document.getElementById('hidden-canvas');
         const ctx = canvas.getContext('2d');
+
+        function rotateLogo() {
+            rotationAngle += rotationSpeed;
+            rotationAngle %= 360;
+            logo.style.transform = `rotate(${rotationAngle}deg)`;
+            animationFrame = requestAnimationFrame(rotateLogo);
+        }
+
+        function stopRotation() {
+            cancelAnimationFrame(animationFrame);
+        }
+
+        function toggleMusic() {
+            const audio = document.getElementById('bg-music');
+            if (audio) {
+                if (isPlaying) {
+                    audio.pause();
+                    stopRotation();
+                    isPlaying = false;
+                } else {
+                    audio.play().catch(error => {
+                        console.error("Error playing audio:", error);
+                    });
+                    isPlaying = true;
+                    rotateLogo();
+                }
+            }
+        }
 
         function setupCanvas() {
             const img = new Image();
@@ -159,6 +192,12 @@
                 logo.classList.add('highlight');
             } else {
                 logo.classList.remove('highlight');
+            }
+        });
+
+        logo.addEventListener('click', (event) => {
+            if (isOverVisiblePart(event)) {
+                toggleMusic();
             }
         });
 
