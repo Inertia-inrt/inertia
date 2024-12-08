@@ -49,11 +49,12 @@
         main {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             min-height: 80vh;
             text-align: center;
             padding: 0 20px;
+            padding-bottom: 40px;
         }
 
         main h1 {
@@ -64,17 +65,17 @@
 
         #logo img {
             filter: 
-                drop-shadow(0 0 1px #999) /* Постоянная серая обводка */
-                drop-shadow(0 0 0px transparent); /* Подготовка для тени при наведении */
+                drop-shadow(0 0 1px #999)
+                drop-shadow(0 0 0px transparent);
             transition: filter 0.3s ease;
-			cursor: pointer;
+            cursor: pointer;
         }
 
         #logo img.highlight {
             filter: 
-                drop-shadow(0 0 1px #999) /* Постоянная серая обводка */
-                drop-shadow(0 0 5px rgba(200, 200, 200, 0.8)) /* Усиленное свечение */
-                drop-shadow(0 0 10px rgba(200, 200, 200, 0.8)); /* Внешняя тень при наведении */
+                drop-shadow(0 0 1px #999)
+                drop-shadow(0 0 5px rgba(200, 200, 200, 0.8))
+                drop-shadow(0 0 10px rgba(200, 200, 200, 0.8));
         }
 
         main p {
@@ -102,6 +103,43 @@
             background: #8d6540;
         }
 
+        .roadmap {
+            margin-top: 50px;
+            max-width: 600px;
+            text-align: left;
+            color: #333;
+        }
+
+        .roadmap h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .roadmap ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+
+        .roadmap li {
+            font-size: 1em;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .roadmap li:last-child {
+            border-bottom: none;
+        }
+
+        .roadmap .note {
+            font-size: 0.9em;
+            color: #666;
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
         footer {
             text-align: center;
             font-size: 0.9em;
@@ -109,7 +147,6 @@
             padding: 20px;
         }
 
-        /* Уведомление о копировании */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -147,6 +184,19 @@
             We do not strive for innovation or claim to be the next big thing. We are a reflection of market psychology—moving forward out of habit, not purpose.
         </p>
         <button class="btn" onclick="copyToClipboard(this)">CA coming soon...</button>
+
+        <div class="roadmap">
+            <h2>Roadmap</h2>
+            <ul>
+                <li>Launch on Pumpfun</li>
+                <li>Bonded</li>
+                <li>1 Million Market Cap</li>
+                <li>Growing by Inertia</li>
+            </ul>
+            <div class="note">
+                We’re not rushing anywhere—this roadmap is merely a formality.
+            </div>
+        </div>
     </main>
     <footer>
         © 2024 Inertia. All rights reserved.
@@ -212,7 +262,7 @@
             const scaleY = canvas.height / rect.height;
 
             const pixel = ctx.getImageData(x * scaleX, y * scaleY, 1, 1).data;
-            return pixel[3] > 0; // Проверяем, не прозрачный ли пиксель
+            return pixel[3] > 0; // pixel[3] > 0 means pixel is not transparent
         }
 
         logo.addEventListener('mousemove', (event) => {
@@ -243,7 +293,7 @@
             toast.classList.add('show');
             setTimeout(() => {
                 toast.classList.remove('show');
-            }, 2000); // Уведомление исчезнет через 2 секунды
+            }, 2000);
         }
 
         setupCanvas();
