@@ -80,10 +80,10 @@
             transition: opacity 0.3s ease;
         }
 
-        /* Обёртка для пульсации */
         .logo-container {
             display: inline-block;
-            animation: pulse 5s infinite;
+            animation: pulse 3s infinite;
+            transition: filter 0.3s ease;
         }
 
         /* Пульсация контейнера */
@@ -101,12 +101,11 @@
         }
 
         #logo img {
-            border: 5px solid transparent;
-            transition: border-color 0.3s ease;
+            transition: filter 0.3s ease;
         }
 
         #logo:hover img {
-            border-color: #ffd700;
+            filter: drop-shadow(0 0 5px #ffd700) drop-shadow(0 0 10px #ffd700); /* Обводка вокруг видимой части */
         }
 
         main p {
@@ -170,7 +169,7 @@
         let isPlaying = false;
         let rotationAngle = 0;
         let animationFrame;
-        const rotationSpeed = 0.1;
+        const rotationSpeed = 0.2;
 
         function rotateLogo() {
             const logo = document.querySelector('#logo img');
@@ -182,7 +181,6 @@
 
         function stopRotation() {
             cancelAnimationFrame(animationFrame);
-            // Не сбрасываем transform, чтобы логотип остался на текущем угле
         }
 
         function toggleMusic() {
