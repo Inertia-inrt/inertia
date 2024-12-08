@@ -59,53 +59,15 @@
         main h1 {
             font-size: 2em;
             margin-bottom: 20px;
-            cursor: pointer;
             position: relative;
-        }
-
-        /* Подсказка */
-        #logo::after {
-            content: "Click to play music!";
-            position: absolute;
-            top: 110%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .logo-container {
-            display: inline-block;
-            animation: pulse 3s infinite;
-            transition: filter 0.3s ease;
-        }
-
-        /* Пульсация контейнера */
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        #logo:hover::after {
-            opacity: 1;
         }
 
         #logo img {
             transition: filter 0.3s ease;
         }
 
-        #logo:hover img {
-            filter: drop-shadow(0 0 5px #ffd700) drop-shadow(0 0 10px #ffd700); /* Обводка вокруг видимой части */
+        #logo img.highlight {
+            filter: drop-shadow(0 0 5px #ffd700) drop-shadow(0 0 10px #ffd700);
         }
 
         main p {
@@ -149,10 +111,8 @@
         </nav>
     </header>
     <main>
-        <h1 id="logo" onclick="toggleMusic()">
-            <span class="logo-container">
-                <img src="logoi.png" alt="Inertia logo" style="height:200px;">
-            </span>
+        <h1 id="logo">
+            <img src="logoi.png" alt="Inertia logo" style="height:200px;">
         </h1>
         <p>
             Momentum without meaning. In a world filled with constant noise, hype, and promises of revolutionary change, Inertia simply exists. 
@@ -165,14 +125,17 @@
     </footer>
 
     <audio id="bg-music" src="background.mp3" loop></audio>
+    <canvas id="hidden-canvas" style="display:none;"></canvas>
     <script>
         let isPlaying = false;
         let rotationAngle = 0;
         let animationFrame;
         const rotationSpeed = 0.2;
+        const logo = document.querySelector('#logo img');
+        const canvas = document.getElementById('hidden-canvas');
+        const ctx = canvas.getContext('2d');
 
         function rotateLogo() {
-            const logo = document.querySelector('#logo img');
             rotationAngle += rotationSpeed;
             rotationAngle %= 360;
             logo.style.transform = `rotate(${rotationAngle}deg)`;
@@ -199,6 +162,44 @@
                 }
             }
         }
+
+        function setupCanvas() {
+            const img = new Image();
+            img.src = logo.src;
+            img.onload = () => {
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                ctx.drawImage(img, 0, 0);
+            };
+        }
+
+        function isOverVisiblePart(event) {
+            const rect = logo.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            const pixel = ctx.getImageData(x * scaleX, y * scaleY, 1, 1).data;
+            return pixel[3] > 0; // Проверяем, не прозрачный ли пиксель
+        }
+
+        logo.addEventListener('mousemove', (event) => {
+            if (isOverVisiblePart(event)) {
+                logo.classList.add('highlight');
+            } else {
+                logo.classList.remove('highlight');
+            }
+        });
+
+        logo.addEventListener('click', (event) => {
+            if (isOverVisiblePart(event)) {
+                toggleMusic();
+            }
+        });
+
+        setupCanvas();
     </script>
 </body>
 </html>
