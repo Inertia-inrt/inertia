@@ -63,12 +63,17 @@
         }
 
         #logo img {
-            filter: drop-shadow(0 0 1px #999) drop-shadow(0 0 0 #999); /* Постоянная обводка */
+            filter: 
+                drop-shadow(0 0 1px #999) /* Постоянная серая обводка */
+                drop-shadow(0 0 0px transparent); /* Подготовка для тени при наведении */
             transition: filter 0.3s ease;
         }
 
         #logo img.highlight {
-            filter: drop-shadow(0 0 5px rgba(200, 200, 200, 0.8)) drop-shadow(0 0 10px rgba(200, 200, 200, 0.8)); /* Усиленное свечение */
+            filter: 
+                drop-shadow(0 0 1px #999) /* Постоянная серая обводка */
+                drop-shadow(0 0 5px rgba(200, 200, 200, 0.8)) /* Усиленное свечение */
+                drop-shadow(0 0 10px rgba(200, 200, 200, 0.8)); /* Внешняя тень при наведении */
         }
 
         main p {
