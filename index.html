@@ -163,20 +163,20 @@
         let isPlaying = false; // Флаг для отслеживания состояния музыки
         let rotationAngle = 0; // Текущий угол вращения
         let animationFrame; // ID текущего анимационного кадра
-        const rotationSpeed = 0.5; // Скорость вращения (в градусах за кадр)
+        const rotationSpeed = 0.1; // Скорость вращения (в градусах за кадр)
 
         function rotateLogo() {
             const logo = document.querySelector('#logo img');
             rotationAngle += rotationSpeed; // Увеличиваем угол
             rotationAngle %= 360; // Ограничиваем угол до 360 градусов
-            const currentScale = window.getComputedStyle(logo).transform.match(/matrix.*\((.+)\)/);
-            const scaleValue = currentScale ? parseFloat(currentScale[1].split(",")[0]) : 1;
-            logo.style.transform = `rotate(${rotationAngle}deg) scale(${scaleValue})`; // Вращение + пульсация
+            logo.style.transform = `rotate(${rotationAngle}deg)`; // Только вращение
             animationFrame = requestAnimationFrame(rotateLogo); // Запрашиваем следующий кадр
         }
 
         function stopRotation() {
             cancelAnimationFrame(animationFrame); // Останавливаем анимацию
+            const logo = document.querySelector('#logo img');
+            logo.style.transform = ''; // Сбрасываем вращение
         }
 
         function toggleMusic() {
