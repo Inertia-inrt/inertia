@@ -1,47 +1,195 @@
-<style>
-    #logo {
-        position: relative;
-        cursor: pointer;
-    }
-
-    #logo::after {
-        content: "Click to play music!";
-        position: absolute;
-        top: 110%;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.7);
-        color: #fff;
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 0.8em;
-        white-space: nowrap;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    #logo img {
-        animation: pulse 2s infinite;
-        border: 5px solid transparent;
-        transition: transform 0.3s ease, border-color 0.3s ease;
-    }
-
-    #logo:hover::after {
-        opacity: 1;
-    }
-
-    #logo:hover img {
-        animation: none;
-        transform: scale(1.1);
-        border-color: #ffd700;
-    }
-
-    @keyframes pulse {
-        0%, 100% {
-            transform: scale(1);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Inertia</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background: #fff;
+            color: #333;
+            background-image: url('background.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
-        50% {
-            transform: scale(1.05);
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
         }
-    }
-</style>
+
+        header .logo {
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+            cursor: pointer; 
+        }
+
+        header .logo:hover {
+            transform: scale(1.1);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin-right: 10px;
+            font-size: 0.95em;
+        }
+
+        nav a:last-child {
+            margin-right: 0;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        main h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        /* Подсказка */
+        #logo::after {
+            content: "Click to play music!";
+            position: absolute;
+            top: 110%; /* Под логотипом */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Пульсация и эффекты */
+        #logo img {
+            animation: pulse 2s infinite;
+            border: 5px solid transparent;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        #logo:hover::after {
+            opacity: 1;
+        }
+
+        #logo:hover img {
+            animation: none;
+            transform: scale(1.1);
+            border-color: #ffd700;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        main p {
+            max-width: 600px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-size: 1em;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #a5754c; 
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Inertia</div>
+        <nav>
+            <a href="#">Twitter</a>
+            <a href="#">Telegram</a>
+        </nav>
+    </header>
+    <main>
+        <h1 id="logo" onclick="toggleMusic()">
+            <img src="logoi.png" alt="Inertia logo" style="height:200px;">
+        </h1>
+        <p>
+            Momentum without meaning. In a world filled with constant noise, hype, and promises of revolutionary change, Inertia simply exists. 
+            We do not strive for innovation or claim to be the next big thing. We are a reflection of market psychology—moving forward out of habit, not purpose.
+        </p>
+        <a href="#" class="btn">Participate in IDO</a>
+    </main>
+    <footer>
+        © 2024 Inertia. All rights reserved.
+    </footer>
+
+    <audio id="bg-music" src="background.mp3" loop></audio>
+    <script>
+        let isPlaying = false; // Флаг для отслеживания состояния музыки
+        let rotationAngle = 0; // Текущий угол вращения
+        let animationFrame; // ID текущего анимационного кадра
+        const rotationSpeed = 0.05; // Скорость вращения (в градусах за кадр)
+
+        function rotateLogo(timestamp) {
+            const logo = document.querySelector('#logo img');
+            rotationAngle += rotationSpeed; // Увеличиваем угол
+            rotationAngle %= 360; // Ограничиваем угол до 360 градусов
+            logo.style.transform = `rotate(${rotationAngle}deg)`; // Устанавливаем новый угол
+            animationFrame = requestAnimationFrame(rotateLogo); // Запрашиваем следующий кадр
+        }
+
+        function stopRotation() {
+            cancelAnimationFrame(animationFrame); // Останавливаем анимацию
+        }
+
+        function toggleMusic() {
+            const audio = document.getElementById('bg-music');
+            if (audio) {
+                const logo = document.querySelector('#logo img');
+                if (isPlaying) {
+                    audio.pause(); // Остановить музыку
+                    stopRotation(); // Остановить вращение
+                    isPlaying = false;
+                } else {
+                    audio.play().catch(error => {
+                        console.error("Error playing audio:", error);
+                    });
+                    isPlaying = true;
+                    rotateLogo(); // Запустить вращение
+                }
+            }
+        }
+    </script>
+</body>
+</html>
